@@ -108,6 +108,10 @@ module OmniAuth
                                         response_mode: response_mode,
                                         response_type: response_type,
                                         nonce: new_nonce)
+        if options.do_mfa
+          params = {amr_values: 'mfa'}
+          uri.query = URI.encode_www_form URI.decode_www_form(uri.query || '').concat(params.to_a)
+        end
         uri.to_s
       end
 
